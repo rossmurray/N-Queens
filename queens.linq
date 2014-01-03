@@ -7,13 +7,17 @@ void Main()
 	Print(solution);
 }
 
-///Solve N-Queens
+/// <summary>
+/// Solve N-Queens
+/// </summary>
 public IEnumerable<Tuple<int, int>> Solve(int n)
 {
 	return SolveForRemainder(Enumerable.Empty<Tuple<int, int>>(), n);
 }
 
-///Prints a chess board with marked queen positions
+/// <summary>
+/// Prints a chess board with marked queen positions
+/// </summary>
 public void Print(IEnumerable<Tuple<int, int>> queenLocations, char emptySpot = '.', char queenSpot = 'x')
 {
 	var size = queenLocations.Count();
@@ -26,8 +30,10 @@ public void Print(IEnumerable<Tuple<int, int>> queenLocations, char emptySpot = 
 	Console.WriteLine(string.Join(Environment.NewLine, lines));
 }
 
-///Depth-first search of possible queen spaces.
-///Recursively places queens in legal positions, backtracking when stuck and quitting when the answer is found.
+/// <summary>
+/// Depth-first search of possible queen spaces.
+/// Recursively places queens in legal positions, backtracking when stuck and quitting when the answer is found.
+/// </summary>
 private IEnumerable<Tuple<int, int>> SolveForRemainder(IEnumerable<Tuple<int, int>> existingPositions, int range)
 {
 	if(existingPositions.Count() == range) return existingPositions;
@@ -37,14 +43,18 @@ private IEnumerable<Tuple<int, int>> SolveForRemainder(IEnumerable<Tuple<int, in
 	return explorations.FirstOrDefault(x => x.Any()) ?? Enumerable.Empty<Tuple<int, int>>();
 }
 
-///Given two lists of numbers, this returns all pairs (the cartesian product).
+/// <summary>
+/// Given two lists of numbers, this returns all pairs (the cartesian product).
+/// </summary>
 private IEnumerable<Tuple<int, int>> AllCombinations(IEnumerable<int> a, IEnumerable<int> b)
 {
 	return a.Join(b, _ => true, _ => true, (m, n) => Tuple.Create(m, n));
 }
 
-///Determines if two points are on a diagonal
-///ie: returns true if the slope between two points is 1 or -1. false otherwise.
+/// <summary>
+/// Determines if two points are on a diagonal
+/// ie: returns true if the slope between two points is 1 or -1. false otherwise.
+/// </summary>
 private bool PositionsAreDiagonal(Tuple<int, int> a, Tuple<int, int> b)
 {
 	var xdif = a.Item1 - b.Item1;
@@ -52,9 +62,11 @@ private bool PositionsAreDiagonal(Tuple<int, int> a, Tuple<int, int> b)
 	return (xdif == ydif || xdif + ydif == 0);
 }
 
-///This returns all legal positions for the next queen.
-///In other words, given a set of existing queen positions,
-///this returns all points on the board except any rows, columns or diagonals already occupied by queens.
+/// <summary>
+/// This returns all legal positions for the next queen.
+/// In other words, given a set of existing queen positions,
+/// this returns all points on the board except any rows, columns or diagonals already occupied by queens.
+/// </summary>
 private IEnumerable<Tuple<int, int>> NextQueenPossibilities(IEnumerable<Tuple<int, int>> queens, int range)
 {
 	var validCols = Enumerable.Range(0, range).Except(queens.Select(x => x.Item1));
